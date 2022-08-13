@@ -20,27 +20,9 @@ public class animate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        time += Time.deltaTime;
-       
-        if (time < 43)
-        {
-            walk();
-        }
-        else
-        {
-            if (time >= 53)
-            {
-                StartAnimation();
-                animator.Play(animations[Random.Range(0,animations.Length - 1)]);
-                time = 50;
-            }
-        }
         
-
-    }
-    public void StartAnimation()
-    {
-
+        walk();
+      
     }
     private void look(Vector2 direction)
     {

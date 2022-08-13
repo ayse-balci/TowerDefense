@@ -5,24 +5,46 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int health = 100;
-    public static float speed = 3f;
-
+    public static float speed = 1f;
+    private bool isDead = false;
+    private Animator animator;
+    
     private Transform target;
     private int waypointIndex = 0;
     
     void Start()
     {
         target = Waypoints.waypoints[0];
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
+        animator.Play("walk");
         Vector2 direction = target.position - transform.position;
         transform.Translate(direction.normalized * (speed * Time.deltaTime), Space.World);
-
+        look(direction);
+        //Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, direction);
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 3f );
+        
+        
         if (Vector2.Distance(transform.position, target.position) <= 0.1f)
         {
             GetNextWaypoint();
+        }
+    }
+    
+    private void look(Vector2 direction)
+    {
+        if (direction.x >  transform.position.x) // To the right
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+
+        }
+        else if (direction.x < transform.position.x) // To the left
+        {
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+            
         }
     }
 
@@ -40,8 +62,9 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health <= 0)
+        if (health <= 0 && !isDead )
         {
+            isDead = true;
             Die();
         }
     }

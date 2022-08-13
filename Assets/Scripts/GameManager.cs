@@ -13,12 +13,6 @@ public class GameManager : MonoBehaviour
         killCountText.text = killedMonsterCount.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UpdateKillCount()
     {
         killedMonsterCount++;
