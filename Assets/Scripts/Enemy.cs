@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 3f;
+    public int health = 100;
+    public static float speed = 3f;
 
     private Transform target;
     private int waypointIndex = 0;
+    
     void Start()
     {
         target = Waypoints.waypoints[0];
@@ -33,5 +35,22 @@ public class Enemy : MonoBehaviour
         }
         waypointIndex++;
         target = Waypoints.waypoints[waypointIndex];
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Dead");
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        gameManager.UpdateKillCount();
+        Destroy(gameObject);
     }
 }
