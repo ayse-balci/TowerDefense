@@ -24,7 +24,7 @@ public class LocateTanks : MonoBehaviour
 
         if (!tankLocations[x].GetIsFull())
         {
-            Instantiate(tankPrefab, tankLocations[x].GetTransform().position, Quaternion.identity);
+            Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
             tankLocations[x].SetIsFull(true);
         }
     }

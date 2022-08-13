@@ -10,12 +10,14 @@ public class Enemy : MonoBehaviour
     private Animator animator;
     
     private Transform target;
+
     private int waypointIndex = 0;
-    
+    private GameManager _gameManager;
     void Start()
     {
         target = Waypoints.waypoints[0];
         animator = GetComponent<Animator>();
+        _gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -31,6 +33,11 @@ public class Enemy : MonoBehaviour
         if (Vector2.Distance(transform.position, target.position) <= 0.1f)
         {
             GetNextWaypoint();
+        }
+        
+        if (Vector2.Distance(transform.position, _gameManager.end.position) <= 0.1f)
+        {
+            _gameManager.FinishGame();
         }
     }
     
