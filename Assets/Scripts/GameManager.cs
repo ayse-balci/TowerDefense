@@ -139,10 +139,19 @@ public class GameManager : MonoBehaviour
     {
         File.Delete(Application.persistentDataPath + "/towerdefense.game");
         UnityEditor.AssetDatabase.Refresh();
-        Destroy (GameObject.FindWithTag("Enemy"));
-        Destroy (GameObject.FindWithTag("Tank"));
+        
+        DestroyWithTag("Enemy");
+        DestroyWithTag("Tank");
         gamePanel.SetActive(false);
         finishPanel.SetActive(true);
+    }
+
+    void DestroyWithTag(String tag)
+    {
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tag);   
+        foreach (GameObject obj in taggedObjects) {
+            Destroy(obj);
+        }
     }
 
     public void QuitGame()
