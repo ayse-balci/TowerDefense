@@ -13,11 +13,14 @@ public class Enemy : MonoBehaviour
 
     private int waypointIndex = 0;
     private GameManager _gameManager;
+
+    private AudioSource _audioSource;
     void Start()
     {
         target = Waypoints.waypoints[0];
         animator = GetComponent<Animator>();
         _gameManager = FindObjectOfType<GameManager>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -69,6 +72,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        _audioSource.Play();
         if (health <= 0 && !isDead )
         {
             isDead = true;
@@ -81,6 +85,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("Dead");
         GameManager gameManager = FindObjectOfType<GameManager>();
         gameManager.UpdateKillCount();
+        gameManager.DecreaseMonsterCountInMap();
         Destroy(gameObject);
     }
 }

@@ -8,22 +8,24 @@ public class EnemySpawner : MonoBehaviour
     public Transform enemyPrefab;
     public Transform spawnPoint;
     public float spawnTime = 2f;
-    private int enemyCount = 0;
-    private int enemyNumber = 1;
+
     private void Start()
     {
-        
-        StartCoroutine(SpawnEnemy()); 
-        
+        //StartCoroutine(SpawnEnemy()); 
     }
 
-    IEnumerator SpawnEnemy()
+    public void SpawnEnemyFromGameManager(int enemyCount)
     {
-        while (enemyCount < 5)
+        StartCoroutine(SpawnEnemy(enemyCount)); 
+    }
+
+    public IEnumerator SpawnEnemy(int enemyCount)
+    {
+        while (enemyCount > 0)
         {
             yield return new WaitForSeconds(spawnTime);
             Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-            enemyCount++;
+            enemyCount--;
         }
     }
 }

@@ -14,10 +14,13 @@ public class Tank : MonoBehaviour
     
     public Transform gun; 
     public Transform bulletPrefab;
+
+    private AudioSource _audioSource;
     
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -71,6 +74,7 @@ public class Tank : MonoBehaviour
         GameObject bulletObject = (GameObject) Instantiate(bulletPrefab, new Vector3(gun.position.x, gun.position.y, -1f), gun.rotation).gameObject;
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.SetTarget(target);
+        _audioSource.Play();
 
     }
 
