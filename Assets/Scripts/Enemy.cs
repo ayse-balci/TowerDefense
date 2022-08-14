@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    public int health = 100;
+    public float health;
+    public float maxHealth = 100;
+
+    public GameObject healthBarUI;
+    public Slider slider;
+    
     public static float speed = 1f;
     private bool isDead = false;
     private Animator animator;
@@ -21,6 +27,9 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         _gameManager = FindObjectOfType<GameManager>();
         _audioSource = GetComponent<AudioSource>();
+
+        health = maxHealth;
+        slider.value = CalculateHealth();
     }
 
     void Update()
@@ -29,10 +38,12 @@ public class Enemy : MonoBehaviour
         Vector2 direction = target.position - transform.position;
         transform.Translate(direction.normalized * (speed * Time.deltaTime), Space.World);
         look(direction);
-        //Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, direction);
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 3f );
-        
-        
+        slider.value = CalculateHealth();
+    
+        if (health < maxHealth)
+        {
+            healthBarUI.SetActive(true);
+        }
         if (Vector2.Distance(transform.position, target.position) <= 0.1f)
         {
             GetNextWaypoint();
@@ -78,6 +89,11 @@ public class Enemy : MonoBehaviour
             isDead = true;
             Die();
         }
+    }
+
+    float CalculateHealth()
+    {
+        return health / maxHealth;
     }
 
     void Die()

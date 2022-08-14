@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 20f;
+    private float speed = 10f;
     private Transform target;
     public Rigidbody2D rb;
     void Start()
