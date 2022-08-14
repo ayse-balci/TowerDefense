@@ -49,7 +49,7 @@ public class LocateTanks : MonoBehaviour
     {
         foreach (var x in arr)
         {
-            if (x != 0)
+            if (x != 99)
             {
                 Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
                 tankLocations[x].SetIsFull(true);

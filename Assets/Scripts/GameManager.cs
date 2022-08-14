@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
 {
     public int killedMonsterCount = 0;
     public TextMeshProUGUI killCountText;
-    public TextMeshProUGUI gameOverText;
+    public GameObject finishPanel;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI leftTankCount;
     public GameObject gamePanel;
@@ -54,13 +55,29 @@ public class GameManager : MonoBehaviour
         _levelManager.SetLevel(_gameState.level);
         _locateTanks.CreateTanksAtContinue(_gameState.fullLocations);
         _locateTanks.SetLeftTankCount(_gameState.leftTankCount);
+        killedMonsterCount = _gameState.killedMonsterCount;
+        
         gamePanel.SetActive(true);
         killCountText.text = killedMonsterCount.ToString();
         levelText.text = _levelManager.GetLevel().ToString();
         UpdateLeftTankCountText();
         SpawnEnemyByLevel();
     }
-    
+
+    public void RestartGame()
+    {
+        finishPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        _levelManager.SetLevel(1);
+        _locateTanks.SetLeftTankCount(1);
+        killedMonsterCount = 0;
+        killCountText.text = killedMonsterCount.ToString();
+        levelText.text = _levelManager.GetLevel().ToString();
+        totalMonsterInMap = 0;
+        UpdateLeftTankCountText();
+        
+        SpawnEnemyByLevel();
+    }
     public void UpdateKillCount()
     {
         killedMonsterCount++;
@@ -106,6 +123,11 @@ public class GameManager : MonoBehaviour
         return totalMonsterInMap;
     }
 
+    public int GetKilledMonsterCount()
+    {
+        return killedMonsterCount;
+    }
+
     public void GoNextLevel()
     {
         _levelManager.UpdateLevel();
@@ -117,7 +139,10 @@ public class GameManager : MonoBehaviour
     {
         File.Delete(Application.persistentDataPath + "/towerdefense.game");
         UnityEditor.AssetDatabase.Refresh();
-        gameOverText.gameObject.SetActive(true);
+        Destroy (GameObject.FindWithTag("Enemy"));
+        Destroy (GameObject.FindWithTag("Tank"));
+        gamePanel.SetActive(false);
+        finishPanel.SetActive(true);
     }
 
     public void QuitGame()
@@ -127,7 +152,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void UpdateLeftTankCountText()
+    public  void UpdateLeftTankCountText()
     {
         leftTankCount.text = _locateTanks.GetLeftTankCount().ToString();
     }
