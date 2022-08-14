@@ -7,7 +7,7 @@ public class GameState : MonoBehaviour
     public LocateTanks locateTanks;
     public int level;
     public int[] fullLocations;
-
+    public int leftTankCount;
     void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
@@ -17,7 +17,7 @@ public class GameState : MonoBehaviour
     public void SaveGameState()
     {
         level = levelManager.GetLevel();
-
+        leftTankCount = locateTanks.GetLeftTankCount();
         fullLocations = new int[10];
         int count = 0;
         for (int i = 0; i < locateTanks.tankLocations.Count; i++)
@@ -39,5 +39,6 @@ public class GameState : MonoBehaviour
 
         this.level = data.level;
         this.fullLocations = data.fullLocations;
+        this.leftTankCount = data.leftTankCount;
     }
 }

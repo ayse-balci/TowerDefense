@@ -28,11 +28,6 @@ public class Bullet : MonoBehaviour
         this.target = target;
     }
 
-    public void Hit()
-    {
-        //Debug.Log("Hitt");
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         Enemy enemy = other.GetComponent<Enemy>();
@@ -40,7 +35,6 @@ public class Bullet : MonoBehaviour
         {
             enemy.TakeDamage(Random.Range(10, 50));
         }
-        Debug.Log("Hit");
         Destroy(gameObject);
     }
 }

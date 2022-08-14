@@ -8,8 +8,12 @@ public class LocateTanks : MonoBehaviour
     public GameObject tankPrefab;
     public List<Location> tankLocations;
     private int locationCount;
+    public int leftTankCount;
+    private GameManager _gameManager;
+    
     void Awake()
     {
+        _gameManager = FindObjectOfType<GameManager>();
         tankLocations = new List<Location>();
         locationCount = transform.childCount;
         for (int i = 0; i < locationCount; i++)
@@ -20,16 +24,25 @@ public class LocateTanks : MonoBehaviour
 
     public void CreateTankAtRandomPosition()
     {
-        int x = Random.Range(0, locationCount);
-
-        if (tankLocations[x].GetIsFull())
+        if (leftTankCount <= 0)
         {
-            CreateTankAtRandomPosition();
+            Debug.Log("You don't have tanks");
+            return;
         }
-        
-        Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
-        tankLocations[x].SetIsFull(true);
-        
+        else
+        {
+            int x = Random.Range(0, locationCount);
+
+            if (tankLocations[x].GetIsFull())
+            {
+                CreateTankAtRandomPosition();
+            }
+
+            Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
+            tankLocations[x].SetIsFull(true);
+            leftTankCount--;
+            _gameManager.UpdateLeftTankCountText();
+        }
     }
 
     public void CreateTanksAtContinue(int[] arr)
@@ -40,10 +53,27 @@ public class LocateTanks : MonoBehaviour
             {
                 Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
                 tankLocations[x].SetIsFull(true);
+                leftTankCount--;
+                _gameManager.UpdateLeftTankCountText();
             }
         }
-        
-        
+    }
+
+    public void IncreaseLeftTankCount()
+    {
+        leftTankCount++;
+        _gameManager.UpdateLeftTankCountText();
+    }
+    
+    public void SetLeftTankCount(int count)
+    {
+        leftTankCount = count;
+        _gameManager.UpdateLeftTankCountText();
+    }
+    
+    public int  GetLeftTankCount()
+    {
+        return leftTankCount;
     }
 }
 
