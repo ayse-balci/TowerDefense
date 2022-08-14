@@ -82,7 +82,6 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Dead");
         GameManager gameManager = FindObjectOfType<GameManager>();
         gameManager.UpdateKillCount();
         gameManager.DecreaseMonsterCountInMap();

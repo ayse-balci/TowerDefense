@@ -8,12 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform enemyPrefab;
     public Transform spawnPoint;
     public float spawnTime = 2f;
-
-    private void Start()
-    {
-        //StartCoroutine(SpawnEnemy()); 
-    }
-
+    
     public void SpawnEnemyFromGameManager(int enemyCount)
     {
         StartCoroutine(SpawnEnemy(enemyCount)); 

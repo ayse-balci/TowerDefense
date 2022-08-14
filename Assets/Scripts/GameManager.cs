@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,24 +18,42 @@ public class GameManager : MonoBehaviour
     public Transform end;
 
     private LevelManager _levelManager;
-    public int monsterCountEachLevel = 1;
-
+    public int monsterCountEachLevel = 1; 
     public int totalMonsterInMap = 0;
 
+    private GameState _gameState;
+
+    public GameObject gamePanel;
+    public LocateTanks _locateTanks;
     private void Awake()
     {
         _enemySpawner = GetComponent<EnemySpawner>();
         _levelManager = FindObjectOfType<LevelManager>();
+        _gameState = FindObjectOfType<GameState>();
+        _locateTanks = FindObjectOfType<LocateTanks>();
     }
-
-    void Start()
+    
+    public void StartGame()
     {
+        gamePanel.SetActive(true);
         killCountText.text = killedMonsterCount.ToString();
         levelText.text = _levelManager.GetLevel().ToString();
-
+        _levelManager.SetLevel(1);
         SpawnEnemyByLevel();
     }
 
+    public void ContinueGame()
+    {
+        _gameState.LoadGameState();
+
+        _locateTanks.CreateTanksAtContinue(_gameState.fullLocations);
+        _levelManager.SetLevel(_gameState.level);
+        gamePanel.SetActive(true);
+        killCountText.text = killedMonsterCount.ToString();
+        levelText.text = _levelManager.GetLevel().ToString();
+        SpawnEnemyByLevel();
+    }
+    
     public void UpdateKillCount()
     {
         killedMonsterCount++;
@@ -46,17 +65,16 @@ public class GameManager : MonoBehaviour
         levelText.text = _levelManager.GetLevel().ToString();
     }
     
-    public void StartGame()
-    {
-        Debug.Log("start game");
-        SceneManager.LoadScene("GameScene");
-    }
-
     public void SpawnEnemyByLevel()
     {
         if (_levelManager.GetLevel() < 5)
         {
             monsterCountEachLevel = _levelManager.GetLevel() * 2 + 1;
+            _enemySpawner.SpawnEnemyFromGameManager(monsterCountEachLevel);
+        }
+        else
+        {
+            monsterCountEachLevel = _levelManager.GetLevel() + 1;
             _enemySpawner.SpawnEnemyFromGameManager(monsterCountEachLevel);
         }
 
@@ -88,5 +106,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("finish game");
         gameOverText.gameObject.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("quit game");
+        _gameState.SaveGameState();
+        Application.Quit();
     }
 }

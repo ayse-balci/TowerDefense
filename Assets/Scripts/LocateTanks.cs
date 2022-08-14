@@ -22,11 +22,28 @@ public class LocateTanks : MonoBehaviour
     {
         int x = Random.Range(0, locationCount);
 
-        if (!tankLocations[x].GetIsFull())
+        if (tankLocations[x].GetIsFull())
         {
-            Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
-            tankLocations[x].SetIsFull(true);
+            CreateTankAtRandomPosition();
         }
+        
+        Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
+        tankLocations[x].SetIsFull(true);
+        
+    }
+
+    public void CreateTanksAtContinue(int[] arr)
+    {
+        foreach (var x in arr)
+        {
+            if (x != 0)
+            {
+                Instantiate(tankPrefab, new Vector3(tankLocations[x].GetTransform().position.x, tankLocations[x].GetTransform().position.y, -1f), Quaternion.identity);
+                tankLocations[x].SetIsFull(true);
+            }
+        }
+        
+        
     }
 }
 

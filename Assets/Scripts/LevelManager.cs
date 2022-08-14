@@ -15,4 +15,9 @@ public class LevelManager : MonoBehaviour
     {
         return currentLevel;
     }
+
+    public void SetLevel(int level)
+    {
+        this.currentLevel = level;
+    }
 }
