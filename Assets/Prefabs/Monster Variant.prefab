@@ -680,22 +680,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1914430000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4620133997182192431}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 321e7356fa5193b469a2097a8a84cb23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0
-  waypoint: {fileID: 0}
-  currentTimeOnPath: 0
-  time: 0
 --- !u!114 &3289271084968360814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,6 +696,3 @@ MonoBehaviour:
   maxHealth: 100
   healthBarUI: {fileID: 7551551750076817957}
   slider: {fileID: 8891210269364401361}
-  takeDamageSound: {fileID: 8300000, guid: d9419ba0bfac1e84a95418ac5851caf6, type: 3}
-  dieSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
-  audioSource: {fileID: 2848057430122053482}
