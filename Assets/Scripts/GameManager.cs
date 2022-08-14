@@ -35,6 +35,13 @@ public class GameManager : MonoBehaviour
         // Called from start button on lobby panel
         finishPanel.SetActive(false);
         gamePanel.SetActive(true);
+        
+        //when click start game, deletes if there is saved state file
+        if (File.Exists(Application.persistentDataPath + "/towerdefense.game"))
+        {
+            File.Delete(Application.persistentDataPath + "/towerdefense.game");
+        }
+        
         _levelManager.SetLevel(1);
         _locateTanks.SetLeftTankCount(1);
         killedMonsterCount = 0;
@@ -56,6 +63,12 @@ public class GameManager : MonoBehaviour
         _locateTanks.CreateTanksAtContinue(_gameState.fullLocations);
         _locateTanks.SetLeftTankCount(_gameState.leftTankCount);
         killedMonsterCount = _gameState.killedMonsterCount;
+        
+        //when click continue game, deletes saved state file not to use again
+        if (File.Exists(Application.persistentDataPath + "/towerdefense.game"))
+        {
+            File.Delete(Application.persistentDataPath + "/towerdefense.game");
+        }
         
         gamePanel.SetActive(true);
         killCountText.text = killedMonsterCount.ToString();
