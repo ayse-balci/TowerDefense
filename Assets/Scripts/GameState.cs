@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
+    // To save game state, this function called. It holds all necessary infos by giving from scripts
     public LevelManager levelManager;
     public LocateTanks locateTanks;
     private GameManager _gameManager;
@@ -24,6 +24,8 @@ public class GameState : MonoBehaviour
         leftTankCount = locateTanks.GetLeftTankCount();
         killedMonsterCount = _gameManager.GetKilledMonsterCount();
         fullLocations = new int[10];
+        
+        // fullLocations list save tanklocations indexes if the index is full. 
         int count = 0;
         for (int i = 0; i < locateTanks.tankLocations.Count; i++)
         {
@@ -45,6 +47,7 @@ public class GameState : MonoBehaviour
 
     public void LoadGameState()
     {
+        // load game state when continue button pressed
         GameData data = SaveSystem.LoadGameState();
 
         this.level = data.level;

@@ -1,13 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,10 +32,13 @@ public class GameManager : MonoBehaviour
     
     public void StartGame()
     {
+        // Called from start button on lobby panel
+        finishPanel.SetActive(false);
         gamePanel.SetActive(true);
         _levelManager.SetLevel(1);
         _locateTanks.SetLeftTankCount(1);
-        
+        killedMonsterCount = 0;
+        totalMonsterInMap = 0;
         killCountText.text = killedMonsterCount.ToString();
         levelText.text = _levelManager.GetLevel().ToString();
         UpdateLeftTankCountText();
@@ -51,6 +48,9 @@ public class GameManager : MonoBehaviour
 
     public void ContinueGame()
     {
+        // Called from continue button on lobby panel 
+        // Continue button shown if there is saved state. when click the button, get saved data by LoadGameState() function
+        
         _gameState.LoadGameState();
         _levelManager.SetLevel(_gameState.level);
         _locateTanks.CreateTanksAtContinue(_gameState.fullLocations);
@@ -64,20 +64,7 @@ public class GameManager : MonoBehaviour
         SpawnEnemyByLevel();
     }
 
-    public void RestartGame()
-    {
-        finishPanel.SetActive(false);
-        gamePanel.SetActive(true);
-        _levelManager.SetLevel(1);
-        _locateTanks.SetLeftTankCount(1);
-        killedMonsterCount = 0;
-        killCountText.text = killedMonsterCount.ToString();
-        levelText.text = _levelManager.GetLevel().ToString();
-        totalMonsterInMap = 0;
-        UpdateLeftTankCountText();
-        
-        SpawnEnemyByLevel();
-    }
+
     public void UpdateKillCount()
     {
         killedMonsterCount++;
@@ -91,17 +78,10 @@ public class GameManager : MonoBehaviour
     
     public void SpawnEnemyByLevel()
     {
-        if (_levelManager.GetLevel() < 5)
-        {
-            monsterCountEachLevel = _levelManager.GetLevel() * 2 + 1;
-            _enemySpawner.SpawnEnemyFromGameManager(monsterCountEachLevel);
-        }
-        else
-        {
-            monsterCountEachLevel = _levelManager.GetLevel() + 1;
-            _enemySpawner.SpawnEnemyFromGameManager(monsterCountEachLevel);
-        }
-        
+        // SpawnEnemyByLevel call EnemyScript object with enemy count according to level ( enemy count = level * 2 + 1)
+         monsterCountEachLevel = _levelManager.GetLevel() * 2 + 1;
+         _enemySpawner.SpawnEnemyFromGameManager(monsterCountEachLevel);
+ 
         if (_levelManager.GetLevel() % 3 == 0)
         {
             _locateTanks.IncreaseLeftTankCount();
@@ -135,19 +115,21 @@ public class GameManager : MonoBehaviour
         SpawnEnemyByLevel();
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void FinishGame()
     {
         File.Delete(Application.persistentDataPath + "/towerdefense.game");
-        UnityEditor.AssetDatabase.Refresh();
-        
-        DestroyWithTag("Enemy");
+
         DestroyWithTag("Tank");
+        DestroyWithTag("Enemy");
+        
         gamePanel.SetActive(false);
         finishPanel.SetActive(true);
     }
 
     void DestroyWithTag(String tag)
     {
+        // Finish all object that have tag 
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tag);   
         foreach (GameObject obj in taggedObjects) {
             Destroy(obj);

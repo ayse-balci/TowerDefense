@@ -712,3 +712,6 @@ MonoBehaviour:
   maxHealth: 100
   healthBarUI: {fileID: 7551551750076817957}
   slider: {fileID: 8891210269364401361}
+  takeDamageSound: {fileID: 8300000, guid: d9419ba0bfac1e84a95418ac5851caf6, type: 3}
+  dieSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
+  audioSource: {fileID: 2848057430122053482}

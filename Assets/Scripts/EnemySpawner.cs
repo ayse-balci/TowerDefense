@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -9,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform spawnPoint;
     public float spawnTime = 2f;
     
+    // GameManager call this function by enemy count according to level ( enemy count = level * 2 + 1)
     public void SpawnEnemyFromGameManager(int enemyCount)
     {
         StartCoroutine(SpawnEnemy(enemyCount)); 

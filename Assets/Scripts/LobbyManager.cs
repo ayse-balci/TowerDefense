@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 
 public class LobbyManager : MonoBehaviour
@@ -16,7 +12,6 @@ public class LobbyManager : MonoBehaviour
     {
         _gameState = FindObjectOfType<GameState>();
         _gameManager = FindObjectOfType<GameManager>();
-        
         if (File.Exists(Application.persistentDataPath + "/towerdefense.game"))
         {
             continueButton.gameObject.SetActive(true);

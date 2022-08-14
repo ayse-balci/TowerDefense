@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,8 +33,12 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         animator.Play("walk");
+        
+        // Enemies continue by waypoints
         Vector2 direction = target.position - transform.position;
         transform.Translate(direction.normalized * (speed * Time.deltaTime), Space.World);
+        
+        // Enemies rotate by waypoints
         look(direction);
         slider.value = CalculateHealth();
     
@@ -44,6 +46,8 @@ public class Enemy : MonoBehaviour
         {
             healthBarUI.SetActive(true);
         }
+        
+        // When enemy close to waaypoint, waypoint changes to next one
         if (Vector2.Distance(transform.position, target.position) <= 0.1f)
         {
             GetNextWaypoint();
@@ -71,6 +75,7 @@ public class Enemy : MonoBehaviour
 
     void GetNextWaypoint()
     {
+        // Waypoint changes according to the order we add in Waypoints object
         if (waypointIndex >= Waypoints.waypoints.Length - 1)
         {
             Destroy(gameObject);
@@ -82,6 +87,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // damage given from from Bullet script with Random.Range(10, 50)
         health -= damage;
         _audioSource.Play();
         if (health <= 0 && !isDead )
@@ -93,14 +99,15 @@ public class Enemy : MonoBehaviour
 
     float CalculateHealth()
     {
+        // calculate ratio for health bar 
         return health / maxHealth;
     }
 
     void Die()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
-        gameManager.UpdateKillCount();
-        gameManager.DecreaseMonsterCountInMap();
+        gameManager.UpdateKillCount();  
+        gameManager.DecreaseMonsterCountInMap(); // monsterCountInMap decrease by 1 to pass next level when all monsters in map destroy
         Destroy(gameObject);
     }
 }

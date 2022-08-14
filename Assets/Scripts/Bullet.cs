@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 15f;
     private Transform target;
     public Rigidbody2D rb;
     void Start()
@@ -30,6 +27,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // When bullet hit to an enemy, this function called
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {

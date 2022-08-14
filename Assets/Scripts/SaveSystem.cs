@@ -7,7 +7,10 @@ public static class SaveSystem
 {
     public static void SaveGameState(GameState gameState)
     {
+        // create a save system using binary files
         BinaryFormatter formatter = new BinaryFormatter();
+        
+        // can save file in different pcs
         string path = Application.persistentDataPath + "/towerdefense.game";
         FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -19,6 +22,7 @@ public static class SaveSystem
 
     public static GameData LoadGameState()
     {
+        // get infos from saved files
         string path = Application.persistentDataPath + "/towerdefense.game";
 
         if (File.Exists(path))

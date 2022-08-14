@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Waypoints : MonoBehaviour
 {
+    // It creates a waypoints list with childs of Waypoints gameobject
     public static Transform[] waypoints;
     
     void Awake()
