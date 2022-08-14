@@ -1,4 +1,3 @@
 # TowerDefense
  
-Codeway Case Study 
 
