@@ -6,14 +6,15 @@ There are monsters born at the beginning of the path with 100 unit health. As th
 
 With the save button the game state is saved and loading the saved game state on the application start.
 
-![start_game](https://user-images.githubusercontent.com/44320909/191344802-febb8e8d-1969-4ee8-9b2f-77f397fac12b.PNG)
 
-![second_screen](https://user-images.githubusercontent.com/44320909/191344860-e23c156f-7df2-4bb7-a9a6-a7b3f2b511a7.PNG)
+![start_game](https://user-images.githubusercontent.com/44320909/191347311-b16a19c3-fc8f-4831-a25f-42eb794fd4f8.PNG)
 
-![third_screen](https://user-images.githubusercontent.com/44320909/191344864-3830ff66-8c3d-4808-8337-9d7f6c911801.PNG)
+![second_screen](https://user-images.githubusercontent.com/44320909/191347338-b706b035-59c5-41dd-87d4-e8e71c7154c7.PNG)
 
-![first_screen](https://user-images.githubusercontent.com/44320909/191344868-c27604b2-c107-438a-956f-abff5ac942af.PNG)
+![third_screen](https://user-images.githubusercontent.com/44320909/191347342-7676a792-7ebc-4b17-ad9a-fdb65a39dae9.PNG)
 
-![continuew_Screen](https://user-images.githubusercontent.com/44320909/191344881-e85982d3-e3bd-47bc-bdd0-1fcf753d8076.PNG)
+![first_screen](https://user-images.githubusercontent.com/44320909/191347344-8442a1d4-2d7a-4c0f-83cf-8f7717cfcab8.PNG)
 
-![game_over](https://user-images.githubusercontent.com/44320909/191345207-63488117-f892-489b-bf4e-692664a7722f.PNG)
+![continuew_Screen](https://user-images.githubusercontent.com/44320909/191347366-5cb6a1bb-750e-462d-80dd-9458d7731409.PNG)
+
+![game_over](https://user-images.githubusercontent.com/44320909/191347374-03b92a27-5224-40ec-88bc-1abcdc5f2b17.PNG)
